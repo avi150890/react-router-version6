@@ -1,15 +1,31 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, Outlet } from 'react-router-dom'
 
 function Products() {
+  const [productData, setProductData] = useState([
+    { id: 1, pname: 'Apples', price: '$200', shipping: '$3', desc: "Red kashmiri apples", img: "https://www.freepnglogos.com/uploads/apple-png/apple-icon-paradise-fruits-iconset-artbees-0.png" },
+    { id: 2, pname: 'Bananas', price: '$40', shipping: '$2', desc: "Yelaniki bananas", img: "https://www.freepnglogos.com/uploads/banana-png/banana-maui-wowi-hawaiian-coffees-smoothies-23.png" },
+    { id: 3, pname: 'Grapes', price: '$100', shipping: '$1', desc: "Black grapes", img: "https://www.freepnglogos.com/uploads/grapes-png/grapes-grape-red-transparent-png-stickpng-5.png" },
+    { id: 4, pname: 'Oranges', price: '$80', shipping: '$3', desc: "Oranges big nagpur", img: "https://www.freepnglogos.com/uploads/orange-png/fruit-orange-png-image-pixabay-22.png" },
+  ]);
   return (
     <div>
-       <ul>
-        <li><Link to='/products/1' style={{textDecoration:'none'}}>Apples</Link></li>
-        <li><Link to='/products/2' style={{textDecoration:'none'}}>Bannanas</Link></li>
-        <li><Link to='/products/3' style={{textDecoration:'none'}}>Grapes</Link></li>
-        <li><Link to='/products/4' style={{textDecoration:'none'}}>Oranges</Link></li>
+      <ul>
+        {
+          productData.map((prod) => {
+            return (
+              <li className='card'><Link state={prod} to={`/products/${prod.id}`} style={{ textDecoration: 'none' }}>
+                <img src={prod.img} />
+                <div className='text'>
+                  <h3>{prod.pname}</h3>
+                </div>
+              </Link>
+              </li>
+            )
+          })
+        }
       </ul>
+      <Outlet context={productData} />
     </div>
   )
 }
